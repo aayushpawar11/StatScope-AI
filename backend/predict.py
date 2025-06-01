@@ -1,4 +1,5 @@
 from data import get_latest_stats
+from model import predict_over_under
 
 SUPPORTED_STATS = {
     "points": "pts",
@@ -10,26 +11,28 @@ SUPPORTED_STATS = {
 
 def predict_stat(player, stat, threshold):
     if stat not in SUPPORTED_STATS:
-        return {"error": f"Stat '{stat}' not supported. Try one of: {list(SUPPORTED_STATS.keys())}"}
+        return {"error": f"Stat '{stat}' not supported."}
 
     stats = get_latest_stats(player)
     if not stats:
         return {"error": "Player not found or no recent games"}
 
-    stat_key = SUPPORTED_STATS[stat]
-    values = [game[stat_key] for game in stats if stat_key in game]
-    if not values:
-        return {"error": f"No recent data found for stat '{stat}'"}
+    # Use last game (for now)
+    latest_game = stats[0]
+    input_stats = [
+        latest_game.get("pts", 0),
+        latest_game.get("reb", 0),
+        latest_game.get("ast", 0),
+        latest_game.get("stl", 0),
+        latest_game.get("blk", 0),
+        latest_game.get("min", 0)
+    ]
 
-    avg = sum(values) / len(values)
-    prediction = "Yes" if avg > threshold else "No"
-    confidence = f"{min(99, int(abs(avg - threshold) / threshold * 100))}%"
-
-    return {
+    result = predict_over_under(input_stats, threshold)
+    result.update({
         "player": player,
         "stat": stat,
         "threshold": threshold,
-        "average_last_5": round(avg, 2),
-        "prediction": prediction,
-        "confidence": confidence
-    }
+        "input_stats": input_stats
+    })
+    return result
