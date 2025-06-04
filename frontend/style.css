@@ -1,0 +1,26 @@
+body {
+  font-family: sans-serif;
+  text-align: center;
+  padding: 40px;
+  background: #f4f4f4;
+}
+.container {
+  background: white;
+  padding: 20px;
+  margin: auto;
+  border-radius: 10px;
+  max-width: 400px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+input, select {
+  margin: 10px 0;
+  padding: 8px;
+  width: 100%;
+}
+button {
+  padding: 10px 20px;
+  cursor: pointer;
+}
+.result {
+  margin-top: 20px;
+}

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>StatScope AI</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>🏀 StatScope AI</h1>
+  <div class="container">
+    <input type="text" id="player" placeholder="Enter player name (e.g. LeBron James)" />
+    <select id="stat">
+      <option value="points">Points</option>
+      <option value="rebounds">Rebounds</option>
+      <option value="assists">Assists</option>
+      <option value="steals">Steals</option>
+      <option value="blocks">Blocks</option>
+    </select>
+    <input type="number" id="threshold" placeholder="Threshold (e.g. 25)" />
+    <button onclick="predict()">Predict</button>
+
+    <div id="result" class="result"></div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
